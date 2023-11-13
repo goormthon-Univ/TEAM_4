@@ -24,10 +24,10 @@ function App() {
       <Styled />
       <Routes>
         {/* 홍민우 경로 */}
-        <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />} />
         <Route path="/Main" element={<Main />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/CreateAcc" element={<CreateAcc />} />
+        <Route path="/CreateAcc" element={<CreateAcc />} /> */}
 
         {/* 최윤서 경로 */}
       </Routes>
