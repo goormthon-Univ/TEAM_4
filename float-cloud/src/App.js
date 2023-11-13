@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Styled from "styled-components";
+import "./Font.css";
 
 //import 페이지
 import CreateAcc from "./pages/Account/CreateAcc";
@@ -23,7 +24,8 @@ function App() {
       <Styled />
       <Routes>
         {/* 홍민우 경로 */}
-        <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />} />
+        <Route path="/Main" element={<Main />} /> */}
 
         {/* 최윤서 경로 */}
       </Routes>

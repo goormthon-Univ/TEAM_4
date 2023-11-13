@@ -8,17 +8,30 @@ const Container = styled.div`
   height: 1024px;
   position: fixed;
 `;
+//background 색깔 지우기
 const Header = styled.div`
   width: 100%;
-  height: 80px;
+  height: 78px;
   padding: 10px 20px 10px 20px;
-  background: #00ff33;
+
+  display: flex;
+  align-items: center;
 `;
+
+const EngLogo = styled.div``;
 
 const Home = () => {
   return (
     <Container>
-      <Header></Header>
+      <Header>
+        <EngLogo>
+          <img
+            src="./images/EngLogo.png"
+            style={{ width: "200px" }}
+            alt="영어로고"
+          ></img>
+        </EngLogo>
+      </Header>
     </Container>
   );
 };

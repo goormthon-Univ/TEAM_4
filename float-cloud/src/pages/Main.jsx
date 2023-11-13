@@ -9,5 +9,30 @@ const Container = styled.div`
   position: fixed;
 `;
 
-const Main = () => {};
+const Header = styled.div`
+  width: 100%;
+  height: 78px;
+  padding: 10px 20px 10px 20px;
+
+  display: flex;
+  align-items: center;
+`;
+
+const EngLogo = styled.div``;
+
+const Main = () => {
+  return (
+    <Container>
+      <Header>
+        <EngLogo>
+          <img
+            src="./images/EngLogo.png"
+            style={{ width: "200px" }}
+            alt="영어로고"
+          ></img>
+        </EngLogo>
+      </Header>
+    </Container>
+  );
+};
 export default Main;
