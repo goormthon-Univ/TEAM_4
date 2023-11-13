@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 // height는 추후 수정 필요 시 수정
 const Container = styled.div`
   width: 100%;
-  min-width: 1440px;
+  min-width: 1276px;
   height: 1024px;
   position: fixed;
 `;
@@ -41,6 +41,7 @@ const EmailBox = styled.div`
 const Form = styled.input`
   width: 470px;
   height: 50px;
+  padding-left: 5px;
   flex-shrink: 0;
 
   border-radius: 10px;
@@ -140,10 +141,18 @@ const Login = () => {
     navigate("/CreateAcc");
   };
 
-  //CSS 마치고 정확하게 하기
+  const isEmailValid = (email) => {
+    // 이메일 형식을 확인하는 정규 표현식
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  //axios 연결 전
   const GoAfterLogin = (event) => {
     if (email.trim() === "") {
       window.alert("이메일을 입력하세요.");
+    } else if (!isEmailValid(email.trim())) {
+      window.alert("올바른 이메일 형식을 입력해주세요");
     } else if (pw.trim() === "") {
       return;
     } else {
@@ -182,9 +191,10 @@ const Login = () => {
           <EmailLabel>이메일*</EmailLabel>
         </BoxText>
         <InputEmail
-          type="text"
+          type="email"
           value={email}
           onChange={handleEmail}
+          placeholder="abc@cloud.com"
         ></InputEmail>
       </EmailBox>
       <PwdBox>
