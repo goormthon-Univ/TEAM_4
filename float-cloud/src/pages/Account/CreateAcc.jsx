@@ -18,6 +18,8 @@ const Header = styled.div`
   align-items: center;
 `;
 
+const EngLogo = styled.div``;
+
 const CreateAcc = () => {
   return (
     <Container>
