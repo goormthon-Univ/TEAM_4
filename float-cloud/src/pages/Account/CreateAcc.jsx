@@ -9,5 +9,28 @@ const Container = styled.div`
   position: fixed;
 `;
 
-const CreateAcc = () => {};
+const Header = styled.div`
+  width: 100%;
+  height: 78px;
+  padding: 10px 20px 10px 20px;
+
+  display: flex;
+  align-items: center;
+`;
+
+const CreateAcc = () => {
+  return (
+    <Container>
+      <Header>
+        <EngLogo>
+          <img
+            src="./images/EngLogo.png"
+            style={{ width: "200px" }}
+            alt="영어로고"
+          ></img>
+        </EngLogo>
+      </Header>
+    </Container>
+  );
+};
 export default CreateAcc;
