@@ -32,6 +32,8 @@ const GoSetting = styled.div`
 `;
 
 const SettingMain = () => {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <Header>
