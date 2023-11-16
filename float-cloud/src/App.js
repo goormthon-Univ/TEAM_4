@@ -25,11 +25,11 @@ function App() {
       <Routes>
         {/* 홍민우 경로 */}
         <Route path="/" element={<Home />} />
-        <Route path="/Main" element={<Main />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/CreateAcc" element={<CreateAcc />} />
-        <Route path="/TeamMain" element={<TeamMain />} />
-        <Route path="/AddComment" element={<AddComment />} />
+        <Route path="/main" element={<Main />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/create-acc" element={<CreateAcc />} />
+        <Route path="/team-main" element={<TeamMain />} />
+        <Route path="/add-comment" element={<AddComment />} />
 
         {/* 최윤서 경로 */}
       </Routes>

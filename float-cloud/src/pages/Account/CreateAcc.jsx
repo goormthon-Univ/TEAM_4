@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 // height는 추후 수정 필요 시 수정
 const Container = styled.div`
@@ -50,10 +51,10 @@ const Form = styled.input`
 `;
 //이메일 박스
 const BoxText = styled.p`
-  margin-left: -408px;
+  margin-left: -415px;
 
   color: var(--Mono-5, #404040);
-  font-family: SUIT;
+  font-family: SUIT-SemiBold;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -75,7 +76,6 @@ const InputName = Form;
 const InputPwd = Form;
 const InputCheck = Form;
 
-//
 const NameLabel = styled.span`
   margin-left: -16px;
 `;
@@ -94,7 +94,7 @@ const SignUpBtn = styled.button`
   flex-shrink: 0;
 
   color: #fafafa;
-  font-family: SUIT;
+  font-family: SUIT-Bold;
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
@@ -103,6 +103,10 @@ const SignUpBtn = styled.button`
   border: none;
   border-radius: 10px;
   background: var(--Skyblue-100, #0094ff);
+
+  &:active {
+    background: #007eda;
+  }
 `;
 
 //계정있으면 로그인 화면으로 가기 박스
@@ -113,7 +117,7 @@ const LoginBox = styled.div`
 `;
 const LoginText = styled.div`
   color: #000;
-  font-family: SUIT;
+  font-family: SUIT-Medium;
   font-size: 13.5px;
   font-style: normal;
   font-weight: 600;
@@ -126,7 +130,7 @@ const LoginBtn = styled.button`
   margin-left: 5px;
 
   color: #0094ff;
-  font-family: SUIT;
+  font-family: SUIT-Bold;
   font-size: 13.5px;
   font-style: normal;
   font-weight: 700;
@@ -135,13 +139,17 @@ const LoginBtn = styled.button`
 
   border: none;
   background-color: transparent;
+
+  &: {
+    color: #000;
+  }
 `;
 
 const CreateAcc = () => {
   const navigate = useNavigate();
 
   const GoLogin = () => {
-    navigate("/Login");
+    navigate("/login");
   };
 
   const isEmailValid = (email) => {
@@ -157,7 +165,7 @@ const CreateAcc = () => {
   };
 
   //CSS 마치고 정확하게 하기
-  const GoAfterSignUp = (event) => {
+  const GoAfterSignUp = async () => {
     if (email.trim() === "") {
       window.alert("이메일을 입력하세요.");
     } else if (!isEmailValid(email.trim())) {
@@ -171,11 +179,8 @@ const CreateAcc = () => {
     } else if (checkPw.trim() === "" || pw.trim() !== checkPw.trim()) {
       window.alert("비밀번호가 다릅니다. 다시 입력해주세요.");
     } else {
-      localStorage.setItem("SignUpEmail", email);
-      localStorage.setItem("SignUpName", name);
-      localStorage.setItem("SignUpPwd", pw);
-
-      navigate("/Main");
+      alert("로그인 성공!");
+      navigate("/main");
     }
   };
 
@@ -240,7 +245,7 @@ const CreateAcc = () => {
       </PwdBox>
       <CheckPwdBox>
         <BoxText>
-          <PwdLabel>비밀번호 확인*</PwdLabel>
+          <PwdLabel style={{ marginLeft: "23px" }}>비밀번호 확인*</PwdLabel>
         </BoxText>
         <InputCheck
           type="password"

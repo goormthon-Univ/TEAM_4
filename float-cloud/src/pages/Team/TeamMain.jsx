@@ -50,6 +50,7 @@ const SubjectContainer = styled.div`
   display: flex;
   width: 61%;
   height: 22px;
+  margin-left: -80px;
 `;
 //주제가 많아서 길이가 오바되면?
 const Subject = styled.div`
@@ -64,6 +65,7 @@ const Subject = styled.div`
 
   display: flex;
   padding: 5px 30px;
+  margin-right: 10px;
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -150,6 +152,10 @@ const AddCloudBtn = styled.button`
   border: none;
   border-radius: 10px;
   background: var(--White, #fafafa);
+
+  &: active {
+    background: #e9e9e9;
+  }
 `;
 const CloudContainer = styled.div`
   height: 20%;
@@ -254,8 +260,166 @@ const CloudImg = styled.div`
   border-radius: 30px;
 `;
 
+//모달
+const ModalContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+`;
+
+const ModalContent = styled.div`
+  position: relative;
+  width: 450px;
+  height: 600px;
+  flex-shrink: 0;
+
+  border-radius: 20px;
+  opacity: 0.8;
+  background: var(--Blue-70, rgb(150, 179, 255));
+`;
+const ModalTitle = styled.div`
+  margin-top: 54px;
+  margin-bottom: 90px;
+
+  padding-left: 31.8%;
+
+  color: var(--White, #fafafa);
+  font-family: SUIT-Bold;
+  font-size: 23px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%; /* 36px */
+`;
+
+const ChooseBoxDiv = styled.div`
+  margin-top: -60px;
+  margin-bottom: 40px;
+  padding-left: 80px;
+  width: 100%;
+  height: 80px;
+`;
+const Modal3ChooseBox = styled.div`
+  align-items: center;
+  justify-content: center;
+
+  width: 300px;
+  height: 31px;
+
+  margin-bottom: 10px;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 86.5px;
+  flex-shrink: 0;
+
+  color: var(--Skyblue-100, #0094ff);
+  font-family: SUIT-Medium;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 21px */
+
+  border: none;
+  border-radius: 50px;
+  background: var(--White, #fafafa);
+`;
+
+const ChooseTeam = Modal3ChooseBox;
+const ChooseSub = Modal3ChooseBox;
+
+const InputCloudTitle = styled.input`
+  display: inline-flex;
+
+  width: 350px;
+  height: 20px;
+
+  margin-left: 30px;
+  padding: 10px 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex-shrink: 0;
+
+  color: var(--Mono-3, #848484);
+  font-family: SUIT-Medium;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 21px */
+
+  border: none;
+  border-radius: 10px;
+  background: var(--White, #fafafa);
+`;
+const InputCloudContent = styled.textarea`
+  display: flex;
+  resize: none;
+  width: 350px;
+  height: 200px;
+
+  margin-left: 30px;
+  margin-top: 10px;
+  padding: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex-shrink: 0;
+
+  color: var(--Mono-3, #848484);
+  font-family: SUIT-Medium;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 21px */
+
+  border: none;
+  border-radius: 10px;
+  background: var(--White, #fafafa);
+`;
+
+const AddCloudNowBtn = styled.button`
+  display: flex;
+  width: 420px;
+
+  margin-left: 17px;
+  margin-top: 10px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  color: #fafafa;
+  font-family: SUIT;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%; /* 24px */
+
+  border: none;
+  border-radius: 10px;
+  background: var(--Skyblue-20, rgba(0, 148, 255, 0.2));
+
+  &:active {
+    background: #6ac1fe;
+  }
+`;
+
 const TeamMain = () => {
   const [isFilled, setIsFilled] = useState(false);
+  const [isModal3Open, setModal3Open] = useState(false);
+
+  const openModal3 = () => {
+    setModal3Open(true);
+  };
+  const closeModal3 = () => {
+    setModal3Open(false);
+  };
 
   const handleClick = () => {
     setIsFilled((prevIsFilled) => !prevIsFilled);
@@ -291,6 +455,8 @@ const TeamMain = () => {
 
       <Middle>
         <SubjectContainer>
+          {/* 팀의 주제들 Subject로 나와야 한다 */}
+          {/* 주제 클릭 시 내용들 그 주제 내용들로 바뀌어야 함 */}
           <Subject>주제1</Subject>
           <Subject>주제2</Subject>
         </SubjectContainer>
@@ -305,9 +471,28 @@ const TeamMain = () => {
             <LeaderName>리더이름</LeaderName>
           </AboutTeamContainer>
           <MiddleLine>
-            <AddCloudBtn>+ 새구름 등록</AddCloudBtn>
+            <AddCloudBtn onClick={openModal3}>+ 새구름 등록</AddCloudBtn>
           </MiddleLine>
           <CloudContainer>
+            {isModal3Open && (
+              <ModalContainer>
+                <ModalContent style={{ background: "rgb(165, 217, 254)" }}>
+                  {/* 모달 내용 */}
+                  <ModalTitle>구름 바로 등록하기</ModalTitle>
+                  <ChooseBoxDiv>
+                    {/* 팀 이름 */}
+                    <ChooseTeam>선택한 팀</ChooseTeam>
+
+                    <ChooseSub>선택한 주제</ChooseSub>
+                  </ChooseBoxDiv>
+                  <InputCloudTitle placeholder="구름의 제목을 입력하세요" />
+                  <InputCloudContent placeholder="구름에 대한 세부 설명을 작성해주세요" />
+                  <AddCloudNowBtn onClick={closeModal3}>확인</AddCloudNowBtn>
+                </ModalContent>
+              </ModalContainer>
+            )}
+
+            {/* 구름 하나 시작 */}
             <CloudBox>
               <CloudTopContainer>
                 <CloudTitle>아동복지</CloudTitle>
@@ -334,6 +519,7 @@ const TeamMain = () => {
                 <img src="./images/Step1.png" style={{ width: "100%" }} />
               </CloudImg>
             </CloudBox>
+            {/* 구름 하나 끝 */}
           </CloudContainer>
         </BlueContainer>
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -106,6 +106,10 @@ const DeleteBtn = styled.button`
   border: none;
   border-radius: 10px;
   background: var(--Skyblue-100, #0094ff);
+
+  &:active {
+    background: #007eda;
+  }
 `;
 const CloudContent = styled.div`
   overflow: fixed;
@@ -249,10 +253,29 @@ const AddSubBtn = styled.button`
   border: none;
   border-radius: 50px;
   background: var(--Skyblue-100, #0094ff);
+
+  &:active {
+    background: #007eda;
+  }
 `;
 
 const BottomLogo = styled.div``;
-const AddComent = () => {
+const AddComment = () => {
+  const [subContent, setSubContent] = useState("");
+  const [subThreads, setSubThreads] = useState([]); // 타래 목록
+
+  const handleSubContentChange = (e) => {
+    setSubContent(e.target.value);
+  };
+
+  const handleAddSubBtnClick = () => {
+    if (subContent.trim() !== "") {
+      // 입력된 내용이 비어있지 않으면 타래 추가
+      setSubThreads([...subThreads, subContent]);
+      setSubContent(""); // 입력 내용 초기화
+    }
+  };
+
   return (
     <Container>
       <Header>
@@ -298,52 +321,25 @@ const AddComent = () => {
             </WriterBox>
           </MainCloud>
 
-          <SubCloudContainer>
-            {/* 받아오기 */}
-            <SubImg></SubImg>
-            <SubWriter>이선의</SubWriter>
-            <SubContent>내용내용내용내용내용</SubContent>
-          </SubCloudContainer>
-
-          <SubCloudContainer>
-            {/* 받아오기 */}
-            <SubImg></SubImg>
-            <SubWriter>이선의</SubWriter>
-            <SubContent>내용내용내용내용내용</SubContent>
-          </SubCloudContainer>
-
-          <SubCloudContainer>
-            {/* 받아오기 */}
-            <SubImg></SubImg>
-            <SubWriter>이선의</SubWriter>
-            <SubContent>내용내용내용내용내용</SubContent>
-          </SubCloudContainer>
-
-          <SubCloudContainer>
-            {/* 받아오기 */}
-            <SubImg></SubImg>
-            <SubWriter>이선의</SubWriter>
-            <SubContent>내용내용내용내용내용</SubContent>
-          </SubCloudContainer>
-
-          <SubCloudContainer>
-            {/* 받아오기 */}
-            <SubImg></SubImg>
-            <SubWriter>이선의</SubWriter>
-            <SubContent>내용내용내용내용내용</SubContent>
-          </SubCloudContainer>
-
-          <SubCloudContainer>
-            {/* 받아오기 */}
-            <SubImg></SubImg>
-            <SubWriter>이선의</SubWriter>
-            <SubContent>내용내용내용내용내용</SubContent>
-          </SubCloudContainer>
+          {/* 타래 달기 구현 */}
+          {subThreads.map((thread, index) => (
+            <SubCloudContainer key={index}>
+              {/* 받아오기 */}
+              <SubImg></SubImg>
+              <SubWriter>이선의</SubWriter>
+              <SubContent>{thread}</SubContent>
+            </SubCloudContainer>
+          ))}
         </BlueContainer>
 
-        <InputSub type="text" placeholder="구름에 타래를 달아주세요" />
+        <InputSub
+          type="text"
+          placeholder="구름에 타래를 달아주세요"
+          value={subContent}
+          onChange={handleSubContentChange}
+        />
         <ButtonBox>
-          <AddSubBtn>타래 등록하기</AddSubBtn>
+          <AddSubBtn onClick={handleAddSubBtnClick}>타래 등록하기</AddSubBtn>
         </ButtonBox>
         <BottomLogo>
           <img src="./images/BottomLogo.png" style={{ width: "130px" }} />
@@ -352,4 +348,4 @@ const AddComent = () => {
     </Container>
   );
 };
-export default AddComent;
+export default AddComment;
