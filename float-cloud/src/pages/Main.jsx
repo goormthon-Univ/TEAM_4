@@ -43,8 +43,6 @@ const Middle = styled.div`
   width: 100%;
   height: auto;
 
-  background: #000;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,7 +52,7 @@ const BlueContainer = styled.div`
   width: 61%;
   height: auto;
 
-  margin-bottom: 10px;
+  margin-bottom: 80px;
   padding: 23px 0.5% 20px 0.6%;
   flex-shrink: 0;
 
@@ -105,6 +103,10 @@ const AddCloudBtn = styled.button`
   border: none;
   border-radius: 24px;
   background: var(--Skyblue-20, rgb(199, 222, 251));
+
+  &:active {
+    background: var(--Skyblue-50, rgb(179, 210, 255));
+  }
 `;
 const NewTeamBtn = styled.button`
   width: 68%;
@@ -121,6 +123,10 @@ const NewTeamBtn = styled.button`
   border: none;
   border-radius: 24px;
   background: var(--Blue-20, rgb(203, 217, 251));
+
+  &:active {
+    background: var(--Skyblue-50, rgb(187, 206, 250));
+  }
 `;
 
 //모달 새로운 팀 추가 선택시
@@ -169,7 +175,6 @@ const ModalImage = styled.div`
   border-radius: 30px;
   opacity: 0.7;
 
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.55) inset;
   background-size: 100%;
   background-repeat: no-repeat;
 `;
@@ -210,6 +215,10 @@ const NextBtn = styled.button`
   border: none;
   border-radius: 10px;
   background: var(--Blue-70, rgba(40, 100, 255, 0.7));
+
+  &:active {
+    background: rgb(50, 107, 255);
+  }
 `;
 
 //아이콘 선택
@@ -420,6 +429,10 @@ const InviteButton = styled.div`
 
   border-radius: 10px;
   background: var(--Blue-70, rgba(40, 100, 255, 0.7));
+
+  &:active {
+    background: rgb(50, 107, 255);
+  }
 `;
 
 //구름 바로 등록하기 모달
@@ -528,6 +541,10 @@ const AddCloudNowBtn = styled.button`
   border: none;
   border-radius: 10px;
   background: var(--Skyblue-20, rgba(0, 148, 255, 0.2));
+
+  &:active {
+    background: #6ac1fe;
+  }
 `;
 //모달1,1-2,2,3 끝
 
@@ -573,6 +590,10 @@ const Team = styled.div`
     opacity: 1;
     visibility: visible;
   }
+
+  &:actice {
+    background: #0071c3;
+  }
 `;
 const Subject = styled.div`
   height: 33px;
@@ -599,7 +620,7 @@ const Image = styled.div`
   position: relative;
 `;
 
-//멤버 목록보여주시 ~
+//멤버 목록보여주기
 const ShowMember = styled.div`
   position: absolute;
   z-index: 1;
@@ -622,7 +643,7 @@ const ShowMember = styled.div`
   visibility: hidden;
   transition: opacity 0.3s;
 `;
-const ShowMemberTitle = styled.div`
+const ShowMemberTitle = styled.span`
   width: 100%;
   height: 25px;
 
@@ -687,10 +708,11 @@ const MemberAuth = styled.div`
 
 const CountCloud = styled.div`
   display: inline-block;
+
   vertical-align: 14px;
   width: 54%;
-  height: 20px;
-  padding: 5px 0px 2px 10px;
+  height: 26px;
+  padding: 10px 0px 2px 10px;
   margin-left: 15%;
 
   color: #fafafa;
@@ -700,7 +722,6 @@ const CountCloud = styled.div`
   font-weight: 500;
   line-height: 150%; /* 18px */
 
-  gap: 7.355px;
   flex-shrink: 0;
 
   border-radius: 36.775px;
@@ -774,13 +795,11 @@ const Main = () => {
     };
   }, [currentEmail, emails]);
 
+  // 팀새로 만들기 눌렀을 시 모달1 열기/닫기
   const openModal = () => {
     setModalOpen(true);
   };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
+  // 첫 주제 및 설명에 대한 모달1_2 열기/닫기
   const openModal1_2 = () => {
     setModal1_2Open(true);
     setModalOpen(false);
@@ -789,6 +808,7 @@ const Main = () => {
     setModal1_2Open(false);
   };
 
+  //이메일로 친구 추가 모달 열기/닫기
   const openModal2 = () => {
     setModal2Open(true);
     closeModal1_2();
@@ -797,6 +817,7 @@ const Main = () => {
     setModal2Open(false);
   };
 
+  //구름 바로 등록 모달 열기/닫기
   const openModal3 = () => {
     setModal3Open(true);
   };
@@ -804,6 +825,7 @@ const Main = () => {
     setModal3Open(false);
   };
 
+  //구름 여러개 중 팀 이미지 선택
   const openImages = () => {
     setImage(true);
   };
@@ -848,6 +870,7 @@ const Main = () => {
         <BlueContainer>
           <TextBox>
             <WelcomeText>반가워요, </WelcomeText>
+            {/* 구르미 자리에 닉네임 받아오기 */}
             <WelcomeText style={{ fontFamily: "SUIT-Bold" }}>
               구르미
             </WelcomeText>
@@ -861,6 +884,7 @@ const Main = () => {
             <NewTeamBtn onClick={openModal}>팀 새로만들기</NewTeamBtn>
           </ButtonBox>
 
+          {/* 구름 바로 등록 클릭 시 열리는 모달 */}
           {isModal3Open && (
             <ModalContainer>
               <ModalContent style={{ background: "rgb(165, 217, 254)" }}>
@@ -871,12 +895,14 @@ const Main = () => {
                     <option name="team" value="0" selected>
                       팀을 선택하세요
                     </option>
+                    {/* 자기가 속한 팀들이 와야해요 */}
                     <option name="team" value="1">
                       뜬구름
                     </option>
                   </ChooseTeam>
 
                   <ChooseSub>
+                    {/* 그 팀의 주제들이 와야함 */}
                     <option name="sub" value="0" selected>
                       주제를 선택하세요
                     </option>
@@ -889,6 +915,7 @@ const Main = () => {
             </ModalContainer>
           )}
 
+          {/* 팀 새로 만들기 클릭 시 모달 */}
           {isModalOpen && (
             <ModalContainer>
               <ModalContent>
@@ -897,9 +924,9 @@ const Main = () => {
                 <ModalImage
                   onClick={openImages}
                   style={{
-                    backgroundImage: `url(${
-                      process.env.PUBLIC_URL + selectedImage
-                    })`,
+                    backgroundImage: selectedImage
+                      ? `url(${process.env.PUBLIC_URL + selectedImage})`
+                      : `url(${process.env.PUBLIC_URL}/images/Add.png)`,
                   }}
                 ></ModalImage>
                 {isChooseImgOpen && (
@@ -997,16 +1024,22 @@ const Main = () => {
 
           <Text>참여하는 팀</Text>
           <TeamsContainer>
+            {/* 활성화된 팀 */}
             <Team isBelow>
               <Subject>예시1</Subject>
               <Image
                 onMouseEnter={() => setShowMembers(true)}
                 onMouseLeave={() => setShowMembers(false)}
               >
+                {/* <img src ="" alt="팀장이 선택한 팀 이미지"/> */}
                 {showMembers && (
                   <ShowMember className="ShowMember">
-                    <ShowMemberTitle>멤버 목록()</ShowMemberTitle>
+                    <ShowMemberTitle>멤버 목록(</ShowMemberTitle>
+                    {/* 몇명인지 카운트한 것 넣기*/}
+                    <ShowMemberTitle></ShowMemberTitle>
+                    <ShowMemberTitle>)</ShowMemberTitle>
                     <MemberList>
+                      {/* 한명 당 MemberBox 한개 씩 */}
                       <MemberBox>
                         <MemberImg></MemberImg>
                         <MemberName>홍민우</MemberName>
@@ -1017,40 +1050,35 @@ const Main = () => {
                         <MemberImg></MemberImg>
                         <MemberName></MemberName>
                         {/* {팀장이면 권한 표시 하기} */}
-                        <MemberAuth>팀장</MemberAuth>
-                      </MemberBox>
-                      <MemberBox>
-                        <MemberImg></MemberImg>
-                        <MemberName></MemberName>
-                        {/* {팀장이면 권한 표시 하기} */}
-                        <MemberAuth>팀장</MemberAuth>
-                      </MemberBox>
-                      <MemberBox>
-                        <MemberImg></MemberImg>
-                        <MemberName></MemberName>
-                        {/* {팀장이면 권한 표시 하기} */}
-                        <MemberAuth>팀장</MemberAuth>
-                      </MemberBox>
-                      <MemberBox>
-                        <MemberImg></MemberImg>
-                        <MemberName></MemberName>
-                        {/* {팀장이면 권한 표시 하기} */}
-                        <MemberAuth>팀장</MemberAuth>
-                      </MemberBox>
-                      <MemberBox>
-                        <MemberImg></MemberImg>
-                        <MemberName></MemberName>
-                        {/* {팀장이면 권한 표시 하기} */}
-                        <MemberAuth>팀장</MemberAuth>
+                        <MemberAuth></MemberAuth>
                       </MemberBox>
                     </MemberList>
                   </ShowMember>
                 )}
               </Image>
-              <CountCloud>현재 구름 갯수 12개</CountCloud>
+              <CountCloud>현재 구름 갯수 몇 개</CountCloud>
+            </Team>
+            {/* 종료된 팀 */}
+            <Team isBelow style={{ background: "#b1b3ba" }}>
+              <Subject style={{ color: "#fff" }}>예시1</Subject>
+              <Image />
+              <CountCloud
+                style={{
+                  background: "#fff",
+                  color: "#848484",
+                  paddingLeft: "32px",
+                  width: "39%",
+                }}
+              >
+                종료된 팀
+              </CountCloud>
             </Team>
           </TeamsContainer>
         </BlueContainer>
+
+        <div>
+          <img src="./images/BottomLogo.png" style={{ width: "130px" }} />
+        </div>
       </Middle>
     </Container>
   );

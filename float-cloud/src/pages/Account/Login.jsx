@@ -52,7 +52,7 @@ const BoxText = styled.p`
   margin-left: -408px;
 
   color: var(--Mono-5, #404040);
-  font-family: SUIT;
+  font-family: SUIT-SemiBold;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -92,7 +92,7 @@ const LoginBtn = styled.button`
   flex-shrink: 0;
 
   color: #fafafa;
-  font-family: SUIT;
+  font-family: SUIT-Bold;
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
@@ -101,6 +101,10 @@ const LoginBtn = styled.button`
   border: none;
   border-radius: 10px;
   background: var(--Skyblue-100, #0094ff);
+
+  &:active {
+    background: #007eda;
+  }
 `;
 
 const SignUpBox = styled.div`
@@ -110,7 +114,7 @@ const SignUpBox = styled.div`
 `;
 const SignUpText = styled.div`
   color: #000;
-  font-family: SUIT;
+  font-family: SUIT-Medium;
   font-size: 13.5px;
   font-style: normal;
   font-weight: 600;
@@ -123,7 +127,7 @@ const SignUpBtn = styled.button`
   margin-left: 5px;
 
   color: #0094ff;
-  font-family: SUIT;
+  font-family: SUIT-Bold;
   font-size: 13.5px;
   font-style: normal;
   font-weight: 700;
@@ -132,13 +136,17 @@ const SignUpBtn = styled.button`
 
   border: none;
   background-color: transparent;
+
+  &:active {
+    color: #000;
+  }
 `;
 
 const Login = () => {
   const navigate = useNavigate();
 
   const GoCreateAcc = () => {
-    navigate("/CreateAcc");
+    navigate("/create-acc");
   };
 
   const isEmailValid = (email) => {
@@ -157,7 +165,7 @@ const Login = () => {
       return;
     } else {
       localStorage.setItem("loggedInUserEmail", email);
-      navigate("/Main");
+      navigate("/main");
     }
   };
 

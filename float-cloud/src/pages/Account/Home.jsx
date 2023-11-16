@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 // height는 추후 수정 필요 시 수정
 const Container = styled.div`
@@ -61,7 +62,7 @@ const P2 = styled.p`
   margin-top: -25px;
 
   color: var(--Mono-5, #404040);
-  font-family: SUIT;
+  font-family: SUIT-Medium;
   font-size: 17px;
   font-style: normal;
   font-weight: 500;
@@ -85,9 +86,15 @@ const StartBtn = styled.button`
   width: 85px;
   height: 40px;
   margin-left: 73%;
+
+  border: none;
   border-radius: 11px;
   border: 2px solid var(--Skyblue-100, #0094ff);
   background: var(--Skyblue-100, #0094ff);
+
+  &:active {
+    background: #007eda;
+  }
 `;
 
 const Home = () => {
@@ -111,11 +118,19 @@ const Home = () => {
       <Middle>
         <MiddSection1>
           <CloudImages>
-            <img
+            <motion.img
               src="./images/HomeCloud.png"
               style={{ width: "400px" }}
               alt="구름2개"
-            ></img>
+              animate={{
+                y: ["0%", "3.8%", "0%"],
+              }}
+              transition={{
+                repeat: Infinity,
+                duration: 1.2,
+                ease: "linear",
+              }}
+            ></motion.img>
           </CloudImages>
           <OutLine>
             <P1>
