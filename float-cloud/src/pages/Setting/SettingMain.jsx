@@ -36,15 +36,13 @@ font-size: 1.875rem;
   align-items: center;
 `;
 
-const StyledButton = styled.button`
-  color: var(--White, #FAFAFA);
-  font-family: SUIT;
-  font-size: 1.125rem;
-  font-style: normal;
+const OvalButton = styled.button`
+  color: ${(props) => props.color};
+  font-size:  ${(props) => props.fontSize};
+  background:   ${(props) => props.backgroundColor};
   font-weight: 700;
   line-height: 150%;  
   border-radius: 3.125rem;
-  background: var(--Skyblue-70, rgba(0, 148, 255, 0.70));
   border: none;
   display: inline-flex;
   padding: 0.625rem 1.25rem;
@@ -53,10 +51,29 @@ const StyledButton = styled.button`
   gap: 0.625rem;
 `;
 
-const userState = styled.div`
-  width: 100%;
-  height: 1024px;
-  position: fixed;
+const OvalTag = styled.div`
+  color: ${(props) => props.color};
+  font-size:  ${(props) => props.fontSize};
+  background:   ${(props) => props.backgroundColor};
+  font-weight: 700;
+  line-height: 150%;  
+  border-radius: 3.125rem;
+  border: none;
+  display: inline-flex;
+  padding: 0.625rem 1.25rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+`;
+
+const UserHistory = styled.div`
+  background:   ${(props) => props.backgroundColor};
+  color: white;
+  item-align: center;
+  text-align: center;
+  width: 33.75rem;
+  height: 9.9375rem;
+  border-radius: 3.125rem;
 `;
 
 
@@ -105,17 +122,41 @@ const SettingMain = () => {
         </HeaderBtn>
       </Header>
       <BackgroundContainer>
-        <div style={{ display: 'flex', justifyContent: 'space-between', width: '90%', marginTop: '1.81rem' }}>
+        {/* 상단 프로필 제목과 버튼 */}
+        <div name=""style={{ display: 'flex', justifyContent: 'space-between', width: '90%', marginTop: '1.81rem' }}>
           <SectionTitle>프로필</SectionTitle>
-          <StyledButton>변경된 프로필 저장하기</StyledButton>
+          {/* 변경하기/변경된 프로필 저장하기 */}
+          <OvalButton fontSize="1.125rem" color="white" backgroundColor="rgba(0, 148, 255, 0.70)">변경된 프로필 저장하기</OvalButton>
         </div>
-        <userState>
-          
-        
-        
-        </userState>
+
+        <div name="userState">
+          <div name="profileInfo">
+            <img name="profileImg" />
+            <div name="userProfile">
+              <div> 닉네임 </div>
+              <div> 이메일 </div>
+            </div>
+          </div>
+
+          <div>
+            <UserHistory backgroundColor="rgba(0, 148, 255, 0.50)">등록한 구름<OvalTag fontSize="1rem" color="rgb(0, 148, 255)" backgroundColor="rgba(0, 148, 255, 0.70)">총 224개의 구름을 작성했어요</OvalTag></UserHistory>
+            <UserHistory backgroundColor="rgba(40, 100, 255, 0.50)">등록한 구름</UserHistory>
+            <div name="floatedGroomHistory"></div>
+            <div name="joinedTeamHistory"></div>
+          </div>
+        </div>
+
+        <div name="teamManage">
+          <div name="activeTeam">
+            <div name="teamCard">
+            </div>
+          </div>
+          <div name="endedTeam"></div>
+        </div>
 
       </BackgroundContainer>
+
+      <footer></footer>>
     </Container>
   );
 };
