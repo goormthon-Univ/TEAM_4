@@ -30,9 +30,9 @@ function App() {
         <Route path="/CreateAcc" element={<CreateAcc />} />
 
         {/* 최윤서 경로 */}
-        <Route path="/SettingMain" element={<SettingMain />} />
-        <Route path="/SettingMain" element={<ManageMem />} />
-        <Route path="/SettingMain" element={<ManageLead />} />
+        <Route path="/settingMain" element={<SettingMain />} />
+        <Route path="/settingMain" element={<ManageMem />} />
+        <Route path="/settingMain" element={<ManageLead />} />
       </Routes>
     </BrowserRouter>
   );
