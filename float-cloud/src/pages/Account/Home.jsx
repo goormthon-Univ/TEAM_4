@@ -21,7 +21,6 @@ const Header = styled.div`
 const EngLogo = styled.div``;
 
 const Middle = styled.div`
-  background: #00ff22;
   width: 100%;
 
   padding: 20px 60px 20px 60px;

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 
-// height는 추후 수정 필요 시 수정
 const Container = styled.div`
   width: 100%;
   min-width: 1276px;
@@ -13,6 +11,7 @@ const Container = styled.div`
   overflow-y: hidden;
 `;
 
+//상단 바
 const Header = styled.div`
   width: 100%;
   height: 78px;
@@ -37,11 +36,14 @@ const GoSetting = styled.div`
   margin-left: 10px;
 `;
 
+//중간
 const Middle = styled.div`
   position: absolute;
   margin-top: 20px;
   width: 100%;
   height: auto;
+
+  background: #000;
 
   display: flex;
   flex-direction: column;
@@ -52,6 +54,7 @@ const BlueContainer = styled.div`
   width: 61%;
   height: auto;
 
+  margin-bottom: 10px;
   padding: 23px 0.5% 20px 0.6%;
   flex-shrink: 0;
 
@@ -120,7 +123,7 @@ const NewTeamBtn = styled.button`
   background: var(--Blue-20, rgb(203, 217, 251));
 `;
 
-//모달
+//모달 새로운 팀 추가 선택시
 const ModalContainer = styled.div`
   position: fixed;
   top: 0;
@@ -135,6 +138,7 @@ const ModalContainer = styled.div`
 `;
 
 const ModalContent = styled.div`
+  position: relative;
   width: 450px;
   height: 600px;
   flex-shrink: 0;
@@ -165,9 +169,7 @@ const ModalImage = styled.div`
   border-radius: 30px;
   opacity: 0.7;
 
-  background: var(--White, #fafafa);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.55) inset;
-
   background-size: 100%;
   background-repeat: no-repeat;
 `;
@@ -214,8 +216,8 @@ const NextBtn = styled.button`
 const ImageContainer = styled.div`
   position: absolute;
 
-  top: 290px;
-  left: 476px;
+  top: 150px;
+  left: 60px;
 
   padding: 10px 7px 10px 7px;
 
@@ -254,6 +256,59 @@ const images = [
   "/images/12.png",
 ];
 
+//1-2
+const InputTeamTopic = styled.input`
+  margin-left: 80px;
+  margin-top: 20px;
+
+  display: inline-flex;
+  padding: 10px 68px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  font-family: SUIT;
+
+  border: none;
+  border-radius: 50px;
+  background: var(--White, #fafafa);
+`;
+const InputTopicDescript = styled.input`
+  margin-left: 80px;
+  margin-top: 20px;
+
+  display: inline-flex;
+  padding: 10px 68px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  font-family: SUIT;
+
+  border: none;
+  border-radius: 50px;
+  background: var(--White, #fafafa);
+`;
+const GetTeamName = styled.div`
+  width: auto;
+  height: 30px;
+
+  margin-top: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--White, #fafafa);
+  font-family: SUIT;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%; /* 30px */
+`;
+
+//isModal2Open에 해당하는 모달2
 const InputEmail = styled.input`
   display: flex;
   width: 260px;
@@ -311,16 +366,15 @@ const Email = styled.span`
   gap: 8px;
   flex-shrink: 0;
 
-  color: var(--White, #fafafa);
+  color: var(--Blue-100, #2864ff);
   font-family: SF Pro Display;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: 150%; /* 24px */
 
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
-  background: var(--Blue-50, rgba(40, 100, 255, 0.5));
+  background: var(--White, #fafafa);
 `;
 const DeleteBtn = styled.button`
   position: absolute;
@@ -334,7 +388,7 @@ const DeleteBtn = styled.button`
   align-items: center;
   gap: 8px;
 
-  color: #fafafa;
+  color: var(--Blue-100, #2864ff);
   font-family: SUIT-SemiMedium;
   font-size: 14px;
   font-style: normal;
@@ -342,10 +396,8 @@ const DeleteBtn = styled.button`
   line-height: 150%; /* 21px */
 
   border: none;
-  border-radius: 20px;
-  opacity: 0.7;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  background: var(--Blue-70, rgba(40, 100, 255, 0.7));
+  border-radius: 10px;
+  background: var(--White, #fafafa);
 `;
 
 const InviteButton = styled.div`
@@ -370,7 +422,114 @@ const InviteButton = styled.div`
   background: var(--Blue-70, rgba(40, 100, 255, 0.7));
 `;
 
-//~~~~모달
+//구름 바로 등록하기 모달
+const ChooseBoxDiv = styled.div`
+  margin-top: -60px;
+  margin-bottom: 40px;
+  padding-left: 80px;
+  width: 100%;
+  height: 80px;
+`;
+const Modal3ChooseBox = styled.select`
+  display: inline-flex;
+  width: 310px;
+  height: 31px;
+
+  margin-bottom: 10px;
+  padding: 6px 14px 5px 103px;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 86.5px;
+  flex-shrink: 0;
+
+  color: var(--Skyblue-100, #0094ff);
+  font-family: SUIT-Medium;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 21px */
+
+  border: none;
+  border-radius: 50px;
+  background: var(--White, #fafafa);
+`;
+
+const ChooseTeam = Modal3ChooseBox;
+const ChooseSub = Modal3ChooseBox;
+
+const InputCloudTitle = styled.input`
+  display: inline-flex;
+
+  width: 350px;
+  height: 20px;
+
+  margin-left: 30px;
+  padding: 10px 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex-shrink: 0;
+
+  color: var(--Mono-3, #848484);
+  font-family: SUIT;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 21px */
+
+  border: none;
+  border-radius: 10px;
+  background: var(--White, #fafafa);
+`;
+const InputCloudContent = styled.textarea`
+  display: flex;
+  resize: none;
+  width: 350px;
+  height: 200px;
+
+  margin-left: 30px;
+  margin-top: 10px;
+  padding: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex-shrink: 0;
+
+  color: var(--Mono-3, #848484);
+  font-family: SUIT;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 21px */
+
+  border: none;
+  border-radius: 10px;
+  background: var(--White, #fafafa);
+`;
+
+const AddCloudNowBtn = styled.button`
+  display: flex;
+  width: 420px;
+
+  margin-left: 17px;
+  margin-top: 10px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  color: #fafafa;
+  font-family: SUIT;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%; /* 24px */
+
+  border: none;
+  border-radius: 10px;
+  background: var(--Skyblue-20, rgba(0, 148, 255, 0.2));
+`;
+//모달1,1-2,2,3 끝
 
 const Text = styled.div`
   margin-top: 10px;
@@ -413,9 +572,6 @@ const Team = styled.div`
   &:hover .ShowMember {
     opacity: 1;
     visibility: visible;
-
-    top: ${({ isBelow }) => (isBelow ? "auto" : "50%")};
-    bottom: ${({ isBelow }) => (isBelow ? "50%" : "auto")};
   }
 `;
 const Subject = styled.div`
@@ -443,22 +599,21 @@ const Image = styled.div`
   position: relative;
 `;
 
+//멤버 목록보여주시 ~
 const ShowMember = styled.div`
   position: absolute;
   z-index: 1;
 
-  top: ${({ isBelow }) => (isBelow ? "100%" : "auto")};
-  bottom: ${({ isBelow }) => (isBelow ? "auto" : "100%")};
+  top: 60%;
+  left: 52%;
 
-  left: 50%;
-
-  width: 280px;
+  width: 180px;
   height: 200px;
-
-  transform: translateX(-3%);
+  flex-shrink: 0;
+  transform: translateX(-2%);
 
   border-radius: 5px;
-  padding: 5px;
+  padding: 10px 10px;
   opacity: 0.9;
 
   background: rgba(var(--White-RGB, 255, 255, 255), 0.8);
@@ -466,6 +621,68 @@ const ShowMember = styled.div`
 
   visibility: hidden;
   transition: opacity 0.3s;
+`;
+const ShowMemberTitle = styled.div`
+  width: 100%;
+  height: 25px;
+
+  margin-top: 4px;
+
+  color: var(--Mono-5, #404040);
+  font-family: SUIT-Bold;
+  font-size: 13px;
+  font-style: normal;s
+  font-weight: 700;
+  line-height: 150%; /* 24px */
+`;
+const MemberList = styled.div`
+  margin-top: 3%;
+  overflow-x: fixed;
+  position: relative;
+
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  width: 100%;
+  height: 80%;
+`;
+const MemberBox = styled.div`
+  position: relative;
+
+  padding: 3px;
+  margin-bottom: 3px;
+  width: 97%;
+  height: 14%;
+  display: flex;
+`;
+const MemberImg = styled.div`
+  width: 13%;
+  height: 100%;
+  border-radius: 30px;
+  background: #000;
+`;
+const MemberName = styled.span`
+  margin-top: 1%;
+  margin-left: 6px;
+
+  color: var(--Mono-5, #404040);
+  font-family: SUIT-Medium;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 24px */
+`;
+const MemberAuth = styled.div`
+  position: absolute;
+  top: 4px;
+  right: 5px;
+  color: #0094ff;
+  font-family: SUIT-Regular;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 24px */
 `;
 
 const CountCloud = styled.div`
@@ -512,13 +729,17 @@ const CountCloud = styled.div`
 const Main = () => {
   const [showMembers, setShowMembers] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isModal1_2Open, setModal1_2Open] = useState(false);
   const [isModal2Open, setModal2Open] = useState(false);
+  const [isModal3Open, setModal3Open] = useState(false);
 
   const [isChooseImgOpen, setImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
   const [emails, setEmails] = useState([]);
   const [currentEmail, setCurrentEmail] = useState("");
+
+  const [teamName, setTeamName] = useState("");
 
   const handleEmailChange = (event) => {
     setCurrentEmail(event.target.value);
@@ -535,6 +756,10 @@ const Main = () => {
     const newEmails = [...emails];
     newEmails.splice(index, 1);
     setEmails(newEmails);
+  };
+
+  const handleTeamNameChange = (event) => {
+    setTeamName(event.target.value);
   };
 
   useEffect(() => {
@@ -556,12 +781,27 @@ const Main = () => {
     setModalOpen(false);
   };
 
+  const openModal1_2 = () => {
+    setModal1_2Open(true);
+    setModalOpen(false);
+  };
+  const closeModal1_2 = () => {
+    setModal1_2Open(false);
+  };
+
   const openModal2 = () => {
     setModal2Open(true);
-    setModalOpen(false);
+    closeModal1_2();
   };
   const closeModal2 = () => {
     setModal2Open(false);
+  };
+
+  const openModal3 = () => {
+    setModal3Open(true);
+  };
+  const closeModal3 = () => {
+    setModal3Open(false);
   };
 
   const openImages = () => {
@@ -608,16 +848,46 @@ const Main = () => {
         <BlueContainer>
           <TextBox>
             <WelcomeText>반가워요, </WelcomeText>
-            <span>
-              구르미님!
-              <br />
-            </span>
+            <WelcomeText style={{ fontFamily: "SUIT-Bold" }}>
+              구르미
+            </WelcomeText>
+            <WelcomeText>
+              님! <br />
+            </WelcomeText>
             <WelcomeText>오늘도 힘차게 새로운 구름을 띄워봐요</WelcomeText>
           </TextBox>
           <ButtonBox>
-            <AddCloudBtn>구름 바로 등록</AddCloudBtn>
+            <AddCloudBtn onClick={openModal3}>구름 바로 등록</AddCloudBtn>
             <NewTeamBtn onClick={openModal}>팀 새로만들기</NewTeamBtn>
           </ButtonBox>
+
+          {isModal3Open && (
+            <ModalContainer>
+              <ModalContent style={{ background: "rgb(165, 217, 254)" }}>
+                {/* 모달 내용 */}
+                <ModalTitle>구름 바로 등록하기</ModalTitle>
+                <ChooseBoxDiv>
+                  <ChooseTeam>
+                    <option name="team" value="0" selected>
+                      팀을 선택하세요
+                    </option>
+                    <option name="team" value="1">
+                      뜬구름
+                    </option>
+                  </ChooseTeam>
+
+                  <ChooseSub>
+                    <option name="sub" value="0" selected>
+                      주제를 선택하세요
+                    </option>
+                  </ChooseSub>
+                </ChooseBoxDiv>
+                <InputCloudTitle placeholder="구름의 제목을 입력하세요" />
+                <InputCloudContent placeholder="구름에 대한 세부 설명을 작성해주세요" />
+                <AddCloudNowBtn onClick={closeModal3}>확인</AddCloudNowBtn>
+              </ModalContent>
+            </ModalContainer>
+          )}
 
           {isModalOpen && (
             <ModalContainer>
@@ -644,10 +914,52 @@ const Main = () => {
                     ))}
                   </ImageContainer>
                 )}
-                <InputTeamName placeholder="팀 이름을 입력하세요"></InputTeamName>
+                <InputTeamName
+                  placeholder="팀 이름을 입력하세요"
+                  value={teamName}
+                  onChange={handleTeamNameChange}
+                ></InputTeamName>
 
                 {/* ... */}
-                <NextBtn onClick={openModal2}>다음</NextBtn>
+                <NextBtn onClick={openModal1_2}>다음</NextBtn>
+              </ModalContent>
+            </ModalContainer>
+          )}
+
+          {isModal1_2Open && (
+            <ModalContainer>
+              <ModalContent>
+                {/* 모달 내용 */}
+                <ModalTitle style={{ marginBottom: "40px" }}>
+                  새로운 팀 만들기
+                </ModalTitle>
+                <ModalImage
+                  style={{
+                    backgroundImage: `url(${
+                      process.env.PUBLIC_URL + selectedImage
+                    })`,
+                  }}
+                ></ModalImage>
+                {isChooseImgOpen && (
+                  <ImageContainer>
+                    {images.map((image, index) => (
+                      <ImageOption
+                        key={index}
+                        src={image}
+                        alt={`Image ${index + 1}`}
+                        onClick={() => selectImage(image)}
+                      />
+                    ))}
+                  </ImageContainer>
+                )}
+                {/* 팀이름 받아오기 */}
+                <GetTeamName>{teamName}</GetTeamName>
+                <InputTeamTopic placeholder="첫 주제를 입력하세요"></InputTeamTopic>
+                <InputTopicDescript placeholder="주제에 대한 간단한 설명을 입력하세요"></InputTopicDescript>
+                {/* ... */}
+                <NextBtn style={{ marginTop: "70px" }} onClick={openModal2}>
+                  다음
+                </NextBtn>
               </ModalContent>
             </ModalContainer>
           )}
@@ -692,7 +1004,47 @@ const Main = () => {
                 onMouseLeave={() => setShowMembers(false)}
               >
                 {showMembers && (
-                  <ShowMember className="ShowMember">Show Members</ShowMember>
+                  <ShowMember className="ShowMember">
+                    <ShowMemberTitle>멤버 목록()</ShowMemberTitle>
+                    <MemberList>
+                      <MemberBox>
+                        <MemberImg></MemberImg>
+                        <MemberName>홍민우</MemberName>
+                        {/* {팀장이면 권한 표시 하기} */}
+                        <MemberAuth>팀장</MemberAuth>
+                      </MemberBox>
+                      <MemberBox>
+                        <MemberImg></MemberImg>
+                        <MemberName></MemberName>
+                        {/* {팀장이면 권한 표시 하기} */}
+                        <MemberAuth>팀장</MemberAuth>
+                      </MemberBox>
+                      <MemberBox>
+                        <MemberImg></MemberImg>
+                        <MemberName></MemberName>
+                        {/* {팀장이면 권한 표시 하기} */}
+                        <MemberAuth>팀장</MemberAuth>
+                      </MemberBox>
+                      <MemberBox>
+                        <MemberImg></MemberImg>
+                        <MemberName></MemberName>
+                        {/* {팀장이면 권한 표시 하기} */}
+                        <MemberAuth>팀장</MemberAuth>
+                      </MemberBox>
+                      <MemberBox>
+                        <MemberImg></MemberImg>
+                        <MemberName></MemberName>
+                        {/* {팀장이면 권한 표시 하기} */}
+                        <MemberAuth>팀장</MemberAuth>
+                      </MemberBox>
+                      <MemberBox>
+                        <MemberImg></MemberImg>
+                        <MemberName></MemberName>
+                        {/* {팀장이면 권한 표시 하기} */}
+                        <MemberAuth>팀장</MemberAuth>
+                      </MemberBox>
+                    </MemberList>
+                  </ShowMember>
                 )}
               </Image>
               <CountCloud>현재 구름 갯수 12개</CountCloud>

@@ -12,7 +12,7 @@ import ManageLead from "./pages/Setting/ManageLead";
 import ManageMem from "./pages/Setting/ManageMem";
 import SettingMain from "./pages/Setting/SettingMain";
 
-import AddComent from "./pages/Team/AddComment";
+import AddComment from "./pages/Team/AddComment";
 import TeamMain from "./pages/Team/TeamMain";
 
 import Main from "./pages/Main";
@@ -24,10 +24,12 @@ function App() {
       <Styled />
       <Routes>
         {/* 홍민우 경로 */}
-        {/* <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/Main" element={<Main />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/CreateAcc" element={<CreateAcc />} /> */}
+        <Route path="/CreateAcc" element={<CreateAcc />} />
+        <Route path="/TeamMain" element={<TeamMain />} />
+        <Route path="/AddComment" element={<AddComment />} />
 
         {/* 최윤서 경로 */}
       </Routes>
