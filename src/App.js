@@ -4,9 +4,9 @@ import Styled from "styled-components";
 import "./Font.css";
 
 //import 페이지
-import CreateAcc from "./pages/Account/CreateAcc";
+import CreateAcc from "./pages/SignUp";
 import LandingPage from "./pages/Landing";
-import Login from "./pages/Account/Login";
+import Login from "./pages/SignIn";
 
 import ManageLead from "./pages/Setting/ManageLead";
 import ManageMem from "./pages/Setting/ManageMem";
