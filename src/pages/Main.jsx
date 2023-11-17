@@ -763,6 +763,15 @@ const Main = () => {
 
   const [teamName, setTeamName] = useState("");
 
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  // 첫 주제 및 설명에 대한 모달1_2 열기/닫기
+  const openModal1_2 = () => {
+    setModal1_2Open(true);
+    setModalOpen(false);
+  };
+
   const handleEmailChange = (event) => {
     setCurrentEmail(event.target.value);
   };
@@ -780,31 +789,8 @@ const Main = () => {
     setEmails(newEmails);
   };
 
-  // const handleTeamNameChange = (event) => {
-  //   setTeamName(event.target.value);
-  // };
-
-  const handleSaveTeam = async (event) => {
-    try {
-      // 팀 정보를 서버에 전송
-      const response = await addTeam({
-        icon: selectedImage,
-        name: teamName,
-      });
-
-      console.log("팀 추가 응답:", response);
-      // 여기에서 팀 정보를 활용하여 필요한 작업 수행
-
-      // 폼 초기화
-      setTeamName("");
-      setSelectedImage(null);
-
-      console.log("팀추가 완료");
-      openModal1_2();
-    } catch (error) {
-      console.error("팀 추가 에러:", error);
-      // 에러 처리 로직 추가
-    }
+  const handleTeamNameChange = (event) => {
+    setTeamName(event.target.value);
   };
 
   useEffect(() => {
@@ -819,15 +805,6 @@ const Main = () => {
     };
   }, [currentEmail, emails]);
 
-  // 팀새로 만들기 눌렀을 시 모달1 열기/닫기
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  // 첫 주제 및 설명에 대한 모달1_2 열기/닫기
-  const openModal1_2 = () => {
-    setModal1_2Open(true);
-    setModalOpen(false);
-  };
   const closeModal1_2 = () => {
     setModal1_2Open(false);
   };
@@ -968,11 +945,11 @@ const Main = () => {
                 <InputTeamName
                   placeholder="팀 이름을 입력하세요"
                   value={teamName}
-                  // onChange={handleTeamNameChange}
+                  onChange={handleTeamNameChange}
                 ></InputTeamName>
 
                 {/* ... */}
-                <NextBtn onClick={handleSaveTeam}>다음</NextBtn>
+                <NextBtn onClick={openModal1_2}>다음</NextBtn>
               </ModalContent>
             </ModalContainer>
           )}
@@ -1049,54 +1026,8 @@ const Main = () => {
           <Text>참여하는 팀</Text>
           <TeamsContainer>
             {/* 활성화된 팀 */}
-            <Team isBelow>
-              <Subject>예시1</Subject>
-              <Image
-                onMouseEnter={() => setShowMembers(true)}
-                onMouseLeave={() => setShowMembers(false)}
-              >
-                {/* <img src ="" alt="팀장이 선택한 팀 이미지"/> */}
-                {showMembers && (
-                  <ShowMember className="ShowMember">
-                    <ShowMemberTitle>멤버 목록(</ShowMemberTitle>
-                    {/* 몇명인지 카운트한 것 넣기*/}
-                    <ShowMemberTitle></ShowMemberTitle>
-                    <ShowMemberTitle>)</ShowMemberTitle>
-                    <MemberList>
-                      {/* 한명 당 MemberBox 한개 씩 */}
-                      <MemberBox>
-                        <MemberImg></MemberImg>
-                        <MemberName>홍민우</MemberName>
-                        {/* {팀장이면 권한 표시 하기} */}
-                        <MemberAuth>팀장</MemberAuth>
-                      </MemberBox>
-                      <MemberBox>
-                        <MemberImg></MemberImg>
-                        <MemberName></MemberName>
-                        {/* {팀장이면 권한 표시 하기} */}
-                        <MemberAuth></MemberAuth>
-                      </MemberBox>
-                    </MemberList>
-                  </ShowMember>
-                )}
-              </Image>
-              <CountCloud>현재 구름 갯수 몇 개</CountCloud>
-            </Team>
+
             {/* 종료된 팀 */}
-            <Team isBelow style={{ background: "#b1b3ba" }}>
-              <Subject style={{ color: "#fff" }}>예시1</Subject>
-              <Image />
-              <CountCloud
-                style={{
-                  background: "#fff",
-                  color: "#848484",
-                  paddingLeft: "32px",
-                  width: "39%",
-                }}
-              >
-                종료된 팀
-              </CountCloud>
-            </Team>
           </TeamsContainer>
         </BlueContainer>
 
