@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { addTeam } from "../api/auth";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/common/Header";
+import { findTeamList } from "../api/team";
+import Ing from "../components/main/Ing";
 
 const Container = styled.div`
   width: 100%;
@@ -10,31 +13,6 @@ const Container = styled.div`
 
   overflow-x: hidden;
   overflow-y: hidden;
-`;
-
-//상단 바
-const Header = styled.div`
-  width: 100%;
-  height: 78px;
-  padding: 10px 20px 10px 20px;
-  margin-bottom: 5px;
-
-  display: flex;
-  align-items: center;
-`;
-
-const EngLogo = styled.div``;
-
-const HeaderBtn = styled.div`
-  position: absolute;
-  right: 2%;
-`;
-const SeeAlarm = styled.div`
-  display: inline-block;
-`;
-const GoSetting = styled.div`
-  display: inline-block;
-  margin-left: 10px;
 `;
 
 //중간
@@ -793,6 +771,8 @@ const Main = () => {
     setTeamName(event.target.value);
   };
 
+  const [cardList, setCardList] = useState([]);
+
   useEffect(() => {
     const handleEnterKeyPress = (event) => {
       handleEnterPress(event);
@@ -800,10 +780,21 @@ const Main = () => {
 
     document.addEventListener("keydown", handleEnterKeyPress);
 
+    const cardRes = Promise.resolve(findTeamList()).then((list) =>
+      setCardList(list)
+    );
+    console.log(cardRes);
+
     return () => {
       document.removeEventListener("keydown", handleEnterKeyPress);
     };
   }, [currentEmail, emails]);
+
+  const teams =
+    cardList &&
+    cardList.map((value) => (
+      <Ing id={value.id} title={value.name} goormCount={value.goormCount} />
+    ));
 
   const closeModal1_2 = () => {
     setModal1_2Open(false);
@@ -841,31 +832,7 @@ const Main = () => {
 
   return (
     <Container>
-      <Header>
-        <EngLogo>
-          <img
-            src="./images/EngLogo.png"
-            style={{ width: "200px" }}
-            alt="영어로고"
-          ></img>
-        </EngLogo>
-        <HeaderBtn>
-          <SeeAlarm>
-            <img
-              src="./images/Alarm.png"
-              style={{ width: "50px" }}
-              alt="알람"
-            ></img>
-          </SeeAlarm>
-          <GoSetting>
-            <img
-              src="./images/Setting.png"
-              style={{ width: "50px" }}
-              alt="설정"
-            ></img>
-          </GoSetting>
-        </HeaderBtn>
-      </Header>
+      <Header />
 
       <Middle>
         <BlueContainer>
@@ -1024,11 +991,7 @@ const Main = () => {
           )}
 
           <Text>참여하는 팀</Text>
-          <TeamsContainer>
-            {/* 활성화된 팀 */}
-
-            {/* 종료된 팀 */}
-          </TeamsContainer>
+          <TeamsContainer>{teams}</TeamsContainer>
         </BlueContainer>
 
         <div>
