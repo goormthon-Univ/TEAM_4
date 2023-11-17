@@ -29,7 +29,6 @@ const Login = () => {
     return emailRegex.test(email);
   };
 
-  //axios 연결 전
   const login = (event) => {
     if (email.trim() === "") {
       window.alert("이메일을 입력하세요.");
@@ -42,6 +41,8 @@ const Login = () => {
         email: email,
         password: pw,
       });
+
+      console.log("로그인 성공");
     }
   };
 

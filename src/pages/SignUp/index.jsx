@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Header from "../../components/common/Header";
 import CloudLogo from "../../components/common/CloudLogo";
 import Input from "../../components/account/Input";
 import Button from "../../components/account/Button";
 import FooterButton from "../../components/account/FooterButton";
+
+import { signUp } from "../../api/auth";
 
 // height는 추후 수정 필요 시 수정
 const Container = styled.div`
@@ -35,7 +36,6 @@ const CreateAcc = () => {
     return nicknameRegex.test(nickname);
   };
 
-  //CSS 마치고 정확하게 하기
   const GoAfterSignUp = async () => {
     if (email.trim() === "") {
       window.alert("이메일을 입력하세요.");
@@ -50,8 +50,12 @@ const CreateAcc = () => {
     } else if (checkPw.trim() === "" || pw.trim() !== checkPw.trim()) {
       window.alert("비밀번호가 다릅니다. 다시 입력해주세요.");
     } else {
-      alert("로그인 성공!");
-      navigate("/main");
+      signUp({
+        email: email,
+        password: pw,
+        nickname: name,
+      });
+      console("회원가입 성공");
     }
   };
 
@@ -100,7 +104,7 @@ const CreateAcc = () => {
       />
       <Button onClick={GoAfterSignUp} name="회원가입" />
       <FooterButton
-        handler={GoLogin}
+        onClick={GoLogin}
         guide="계정이 있으신가요?"
         button="로그인하기"
       />
