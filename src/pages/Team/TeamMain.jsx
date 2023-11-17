@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import Header from "../../components/common/Header";
 
 // height는 추후 수정 필요 시 수정
 const Container = styled.div`
@@ -9,29 +10,6 @@ const Container = styled.div`
   width: 100%;
   min-width: 1276px;
   height: 1024px;
-`;
-
-const Header = styled.div`
-  width: 100%;
-  height: 78px;
-  padding: 10px 20px 10px 20px;
-
-  display: flex;
-  align-items: center;
-`;
-
-const EngLogo = styled.div``;
-
-const HeaderBtn = styled.div`
-  position: absolute;
-  right: 2%;
-`;
-const SeeAlarm = styled.div`
-  display: inline-block;
-`;
-const GoSetting = styled.div`
-  display: inline-block;
-  margin-left: 10px;
 `;
 
 const Middle = styled.div`
@@ -427,32 +405,7 @@ const TeamMain = () => {
 
   return (
     <Container>
-      <Header>
-        <EngLogo>
-          <img
-            src="./images/EngLogo.png"
-            style={{ width: "200px" }}
-            alt="영어로고"
-          ></img>
-        </EngLogo>
-        <HeaderBtn>
-          <SeeAlarm>
-            <img
-              src="./images/Alarm.png"
-              style={{ width: "50px" }}
-              alt="알람"
-            ></img>
-          </SeeAlarm>
-          <GoSetting>
-            <img
-              src="./images/Setting.png"
-              style={{ width: "50px" }}
-              alt="설정"
-            ></img>
-          </GoSetting>
-        </HeaderBtn>
-      </Header>
-
+      <Header />
       <Middle>
         <SubjectContainer>
           {/* 팀의 주제들 Subject로 나와야 한다 */}

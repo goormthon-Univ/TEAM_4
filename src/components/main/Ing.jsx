@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useState, useEffect } from "react";
 
 const Team = styled.div`
   width: calc(20% - 20px);
@@ -179,12 +180,12 @@ const CountCloud = styled.div`
   }
 `;
 
-export default function Ing() {
+export default function Ing(props) {
   const [showMembers, setShowMembers] = useState(false);
 
   return (
-    <Team isBelow>
-      <Subject>예시1</Subject>
+    <Team isBelow id={props.id}>
+      <Subject>{props.title}</Subject>
       <Image
         onMouseEnter={() => setShowMembers(true)}
         onMouseLeave={() => setShowMembers(false)}
@@ -214,7 +215,7 @@ export default function Ing() {
           </ShowMember>
         )}
       </Image>
-      <CountCloud>현재 구름 갯수 몇 개</CountCloud>
+      <CountCloud>{props.goormCount}</CountCloud>
     </Team>
   );
 }
