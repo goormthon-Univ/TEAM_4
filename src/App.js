@@ -4,9 +4,9 @@ import Styled from "styled-components";
 import "./Font.css";
 
 //import 페이지
-import CreateAcc from "./pages/Account/CreateAcc";
-import Home from "./pages/Account/Home";
-import Login from "./pages/Account/Login";
+import CreateAcc from "./pages/SignUp";
+import LandingPage from "./pages/Landing";
+import Login from "./pages/SignIn";
 
 import ManageLead from "./pages/Setting/ManageLead";
 import ManageMem from "./pages/Setting/ManageMem";
@@ -24,7 +24,7 @@ function App() {
       <Styled />
       <Routes>
         {/* 홍민우 경로 */}
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/main" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create-acc" element={<CreateAcc />} />

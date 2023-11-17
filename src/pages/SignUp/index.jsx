@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Header from "../../components/common/Header";
+import CloudLogo from "../../components/common/CloudLogo";
+import Input from "../../components/account/Input";
+import Button from "../../components/account/Button";
+import FooterButton from "../../components/account/FooterButton";
 
 // height는 추후 수정 필요 시 수정
 const Container = styled.div`
@@ -9,140 +14,6 @@ const Container = styled.div`
   min-width: 1276px;
   height: 1024px;
   position: fixed;
-`;
-
-const Header = styled.div`
-  width: 100%;
-  height: 78px;
-  padding: 10px 20px 10px 20px;
-
-  display: flex;
-  align-items: center;
-`;
-
-const EngLogo = styled.div``;
-
-const CloudLogo = styled.div`
-  width: 100%;
-  height: 120px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Box = styled.div`
-  height: 108px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-const Form = styled.input`
-  width: 470px;
-  height: 50px;
-  padding-left: 5px;
-  flex-shrink: 0;
-
-  border-radius: 10px;
-  border: 1px solid var(--Mono-6, #2a2a2a);
-  background: var(--White, #fafafa);
-`;
-//이메일 박스
-const BoxText = styled.p`
-  margin-left: -415px;
-
-  color: var(--Mono-5, #404040);
-  font-family: SUIT-SemiBold;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%;
-`;
-const EmailLabel = styled.span`
-  margin-left: -15px;
-`;
-
-//박스
-const EmailBox = Box;
-const NameBox = Box;
-const PwdBox = Box;
-const CheckPwdBox = Box;
-const SignUpBox = Box;
-
-const InputEmail = Form;
-const InputName = Form;
-const InputPwd = Form;
-const InputCheck = Form;
-
-const NameLabel = styled.span`
-  margin-left: -16px;
-`;
-const PwdLabel = styled.span`
-  margin-left: 34px;
-`;
-
-const SignUpBtn = styled.button`
-  display: inline-flex;
-  width: 475px;
-  height: 50px;
-  padding: 10px 20px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-
-  color: #fafafa;
-  font-family: SUIT-Bold;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 150%; /* 30px */
-
-  border: none;
-  border-radius: 10px;
-  background: var(--Skyblue-100, #0094ff);
-
-  &:active {
-    background: #007eda;
-  }
-`;
-
-//계정있으면 로그인 화면으로 가기 박스
-const LoginBox = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const LoginText = styled.div`
-  color: #000;
-  font-family: SUIT-Medium;
-  font-size: 13.5px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%; /* 27px */
-`;
-const LoginBtn = styled.button`
-  width: 100px;
-  height: 50px;
-
-  margin-left: 5px;
-
-  color: #0094ff;
-  font-family: SUIT-Bold;
-  font-size: 13.5px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 150%; /* 27px */
-  text-decoration-line: underline;
-
-  border: none;
-  background-color: transparent;
-
-  &: {
-    color: #000;
-  }
 `;
 
 const CreateAcc = () => {
@@ -204,17 +75,42 @@ const CreateAcc = () => {
 
   return (
     <Container>
-      <Header>
-        <EngLogo>
-          <img
-            src="./images/EngLogo.png"
-            style={{ width: "200px" }}
-            alt="영어로고"
-          ></img>
-        </EngLogo>
-      </Header>
+      <Header />
+      <CloudLogo />
+      <Input
+        label="이메일*"
+        type="email"
+        placeholder="abcdef@naver.com"
+        value={email}
+        handler={handleEmail}
+      />
+      <Input
+        label="닉네임*"
+        type="text"
+        value={name}
+        handler={handleName}
+        placeholder="구르미"
+      />
+      <Input label="비밀번호*" type="password" value={pw} handler={handlePW} />
+      <Input
+        label="비밀번호 확인*"
+        type="password"
+        value={checkPw}
+        handler={handleCheckPW}
+      />
+      <Button onClick={GoAfterSignUp} name="회원가입" />
+      <FooterButton
+        handler={GoLogin}
+        guide="계정이 있으신가요?"
+        button="로그인하기"
+      />
+    </Container>
+  );
+};
+export default CreateAcc;
 
-      <CloudLogo>
+/*
+<CloudLogo>
         <img src="./images/CloudLogo.png" style={{ width: "168px" }} />
       </CloudLogo>
       <EmailBox>
@@ -260,7 +156,4 @@ const CreateAcc = () => {
         <LoginText>계정이 있으신가요?</LoginText>
         <LoginBtn onClick={GoLogin}>로그인하기</LoginBtn>
       </LoginBox>
-    </Container>
-  );
-};
-export default CreateAcc;
+      */
