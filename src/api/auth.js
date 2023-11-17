@@ -38,3 +38,14 @@ export const signUp = async (userInfo) => {
     window.location.replace("/create-acc");
   }
 };
+
+//팀 추가
+export const addTeam = async (teamData) => {
+  try {
+    const res = await http.post("/teams/join", teamData);
+    return res.data;
+  } catch (error) {
+    console.error("팀 추가 에러:", error);
+    throw error;
+  }
+};

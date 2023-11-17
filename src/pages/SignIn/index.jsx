@@ -41,8 +41,6 @@ const Login = () => {
         email: email,
         password: pw,
       });
-
-      console.log("로그인 성공");
     }
   };
 

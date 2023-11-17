@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { addTeam } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
@@ -717,7 +718,7 @@ const CountCloud = styled.div`
 
   color: #fafafa;
   font-family: SUIT-Medium;
-  font-size: 11px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 500;
   line-height: 150%; /* 18px */
@@ -779,8 +780,31 @@ const Main = () => {
     setEmails(newEmails);
   };
 
-  const handleTeamNameChange = (event) => {
-    setTeamName(event.target.value);
+  // const handleTeamNameChange = (event) => {
+  //   setTeamName(event.target.value);
+  // };
+
+  const handleSaveTeam = async (event) => {
+    try {
+      // 팀 정보를 서버에 전송
+      const response = await addTeam({
+        icon: selectedImage,
+        name: teamName,
+      });
+
+      console.log("팀 추가 응답:", response);
+      // 여기에서 팀 정보를 활용하여 필요한 작업 수행
+
+      // 폼 초기화
+      setTeamName("");
+      setSelectedImage(null);
+
+      console.log("팀추가 완료");
+      openModal1_2();
+    } catch (error) {
+      console.error("팀 추가 에러:", error);
+      // 에러 처리 로직 추가
+    }
   };
 
   useEffect(() => {
@@ -944,11 +968,11 @@ const Main = () => {
                 <InputTeamName
                   placeholder="팀 이름을 입력하세요"
                   value={teamName}
-                  onChange={handleTeamNameChange}
+                  // onChange={handleTeamNameChange}
                 ></InputTeamName>
 
                 {/* ... */}
-                <NextBtn onClick={openModal1_2}>다음</NextBtn>
+                <NextBtn onClick={handleSaveTeam}>다음</NextBtn>
               </ModalContent>
             </ModalContainer>
           )}
