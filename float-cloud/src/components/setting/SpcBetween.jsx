@@ -5,7 +5,7 @@ const SpcAway = styled.div`
   display: flex;
   justify-content: space-between;
   width: 90%;
-  margin-top: 1.81rem;
+  margin-top: 2rem;
 `;
 
 const SpcBetween = (props) => {

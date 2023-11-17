@@ -7,11 +7,13 @@ import RoundedTag from "../../components/common/RoundedTag";
 import BiggestTxt from "../../components/text/BiggestTxt";
 import SpcBetween from "../../components/setting/SpcBetween";
 import HistoryTag from "../../components/setting/HistoryTag";
+import TeamCard from "../../components/setting/TeamCard";
 
 const Container = styled.div`
   width: 100%;
-  height: 2000px;
+  height: 100vh; /* 전체 뷰포트 높이로 설정 */
   position: fixed;
+  overflow-y: auto;
 `;
 
 const BackgroundContainer = styled.div`
@@ -20,6 +22,7 @@ const BackgroundContainer = styled.div`
   border-radius: 50px;
   display: flex;
   flex-direction: column;
+  // align-items: center;
 `;
 
 const UserProfileImage = styled.div`
@@ -28,7 +31,7 @@ const UserProfileImage = styled.div`
   background-color: rgb(0, 0, 0);
 `;
 
-const CustomDiv = styled.div`
+const div = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -52,13 +55,17 @@ const SettingMain = () => {
         </SpcBetween>
 
         <div name="userProfile" style={{ margin: "1rem 0" }}>
-          <CustomDiv>
+          <div style={{ display: "flex" }}>
             <UserProfileImage />
-            <div style={{ marginLeft: "1rem" }}>
+            <div style={{
+              // marginLeft: "1rem", display: "flex",
+              // alignItems: "center"
+            }}>
               <BiggestTxt>username</BiggestTxt>
+              <br />
               <BiggestTxt>user email</BiggestTxt>
             </div>
-          </CustomDiv>
+          </div>
 
           <SpcBetween name="userHistory" style={{ margin: "1rem 0" }}>
             <HistoryTag backgroundColor="rgba(0, 148, 255, 0.50)">
@@ -67,6 +74,7 @@ const SettingMain = () => {
                 backgroundColor="white"
                 color="rgba(0, 148, 255, 0.70)" />
             </HistoryTag>
+            <div style={{ padding: "1vw" }} />
             <HistoryTag backgroundColor="rgba(40, 100, 255, 0.50)">
               지금까지 참여한 팀의 수는?
               <RoundedTag value="총 17개의 팀에 참여했어요!"
@@ -83,9 +91,6 @@ const SettingMain = () => {
 
           <div name="activeTeam">
             <div name="miniTitle" style={{ fontSize: "1.5rem" }}>활성화된 팀</div>
-            <div name="cardPanel">
-
-            </div>
           </div>
 
           <div name="inactiveTeam">

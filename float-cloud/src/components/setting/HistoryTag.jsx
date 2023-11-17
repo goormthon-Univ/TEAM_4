@@ -7,7 +7,7 @@ import RoundedTag from "../common/RoundedTag"; // RoundedTag 파일 경로에 �
 const AbtHistory = styled.div`
   background: ${(props) => props.backgroundColor};
   border-radius: 3.125rem;
-  width: 34rem;
+  width: 30vw;
   height: 10rem;
   display: flex;
   position: relative;
