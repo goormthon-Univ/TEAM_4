@@ -6,6 +6,7 @@ import CloudLogo from "../../components/common/CloudLogo";
 import Input from "../../components/account/Input";
 import Button from "../../components/account/Button";
 import FooterButton from "../../components/account/FooterButton";
+import { signIn } from "../../api/auth";
 
 // height는 추후 수정 필요 시 수정
 const Container = styled.div`
@@ -35,10 +36,12 @@ const Login = () => {
     } else if (!isEmailValid(email.trim())) {
       window.alert("올바른 이메일 형식을 입력해주세요");
     } else if (pw.trim() === "") {
-      return;
+      window.alert("비밀번호를 입력하세요.");
     } else {
-      localStorage.setItem("loggedInUserEmail", email);
-      navigate("/main");
+      signIn({
+        email: email,
+        password: pw,
+      });
     }
   };
 
