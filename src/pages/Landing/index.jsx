@@ -97,10 +97,10 @@ const StartBtn = styled.button`
   }
 `;
 
-const Home = () => {
+const LandingPage = () => {
   const navigate = useNavigate();
-  const GoLogin = () => {
-    navigate("/Login");
+  const goLogin = () => {
+    navigate("/login");
   };
 
   return (
@@ -147,10 +147,10 @@ const Home = () => {
           </OutLine>
         </MiddSection1>
         <MiddSection2>
-          <StartBtn onClick={GoLogin}>시작하기</StartBtn>
+          <StartBtn onClick={goLogin}>시작하기</StartBtn>
         </MiddSection2>
       </Middle>
     </Container>
   );
 };
-export default Home;
+export default LandingPage;
