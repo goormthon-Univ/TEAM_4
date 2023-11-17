@@ -6,7 +6,7 @@ http.defaults.withCredentials = true;
 
 const accessToken = localStorage.getItem("access");
 http.defaults.headers.common["Authorization"] = accessToken
-  ? accessToken
+  ? "Bearer " + accessToken
   : null;
 
 export default http;
