@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import Header from "../../components/common/Header";
 
 // height는 추후 수정 필요 시 수정
 const Container = styled.div`
@@ -9,17 +10,6 @@ const Container = styled.div`
   height: 1024px;
   position: fixed;
 `;
-
-const Header = styled.div`
-  width: 100%;
-  height: 78px;
-  padding: 10px 20px 10px 20px;
-
-  display: flex;
-  align-items: center;
-`;
-
-const EngLogo = styled.div``;
 
 const Middle = styled.div`
   width: 100%;
@@ -105,16 +95,7 @@ const LandingPage = () => {
 
   return (
     <Container>
-      <Header>
-        <EngLogo>
-          <img
-            src="./images/EngLogo.png"
-            style={{ width: "200px" }}
-            alt="영어로고"
-          ></img>
-        </EngLogo>
-      </Header>
-
+      <Header />
       <Middle>
         <MiddSection1>
           <CloudImages>
