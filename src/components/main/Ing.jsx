@@ -200,7 +200,9 @@ export default function Ing(props) {
             <MemberList>
               {/* 한명 당 MemberBox 한개 씩 */}
               <MemberBox>
-                <MemberImg></MemberImg>
+                <MemberImg>
+                  <img src={`./images/${props.icon}.png`} />
+                </MemberImg>
                 <MemberName>홍민우</MemberName>
                 {/* {팀장이면 권한 표시 하기} */}
                 <MemberAuth>팀장</MemberAuth>
@@ -209,7 +211,11 @@ export default function Ing(props) {
           </ShowMember>
         )}
       </Image>
-      <CountCloud>현재 구름 갯수{props.goormCount}개</CountCloud>
+      {props.goormCount === 0 ? (
+        <CountCloud>현재 구름 갯수 0개</CountCloud>
+      ) : (
+        <CountCloud>현재 구름 갯수{props.goormCount}개</CountCloud>
+      )}
     </Team>
   );
 }

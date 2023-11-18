@@ -23,6 +23,7 @@ const RoundBtn = styled.div`
 
 const AlarmContainer = styled.div`
   z-index: 1;
+  overflow-x: hidden;
   position: absolute;
   top: 100%;
   left: -490%;
@@ -81,7 +82,9 @@ export default function Header() {
   const [showAlarm, setAlarm] = useState(false);
   const navigate = useNavigate;
 
-  const GoSetting = () => {};
+  const GoMain = () => {
+    navigate("/main");
+  };
 
   return (
     <div>

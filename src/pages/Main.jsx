@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { useNavigate } from "react-router-dom";
 import Header from "../components/common/Header";
-import { findTeamList } from "../api/team";
+import { findTeamList, addTeamTopic, joinTeam, invite } from "../api/team";
 import { addTeam } from "../api/team";
 import Ing from "../components/main/Ing";
 
@@ -558,16 +558,39 @@ const Main = () => {
   const [isChooseImgOpen, setImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const [emails, setEmails] = useState([]);
+  const [invitedEmail, setInvitedEmail] = useState("");
   const [currentEmail, setCurrentEmail] = useState("");
 
   const [teamName, setTeamName] = useState("");
+  const [teamTopic, setTeamTopic] = useState("");
+  const [teamDetail, setTeamDetail] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleTopic = (event) => {
+    setTeamTopic(event.target.value);
+  };
+  const handleDetail = (event) => {
+    setTeamDetail(event.target.value);
+  };
 
   const openModal = () => {
     setModalOpen(true);
   };
   // 첫 주제 및 설명에 대한 모달1_2 열기/닫기
   const openModal1_2 = () => {
+    let teamId;
+    addTeam({
+      name: teamName,
+      detail: "",
+      icon: selectedImage,
+    }).then((res) => {
+      teamId = res;
+      console.log(res);
+      console.log(teamId);
+      joinTeam({ team: res });
+    });
+
     setModal1_2Open(true);
     setModalOpen(false);
   };
@@ -578,19 +601,21 @@ const Main = () => {
 
   const handleEnterPress = (event) => {
     if (event.key === "Enter" && currentEmail.trim() !== "") {
-      setEmails([...emails, currentEmail]);
+      setCurrentEmail("");
+
+      invite({
+        email: currentEmail,
+      });
+
+      setInvitedEmail(currentEmail);
       setCurrentEmail("");
     }
-  };
-  const handleDeleteEmail = (index) => {
-    // 이메일 삭제 로직
-    const newEmails = [...emails];
-    newEmails.splice(index, 1);
-    setEmails(newEmails);
   };
 
   const handleTeamNameChange = (event) => {
     setTeamName(event.target.value);
+
+    localStorage.setItem("팀이름", event.target.value);
   };
 
   const [cardList, setCardList] = useState([]);
@@ -606,16 +631,24 @@ const Main = () => {
       setCardList(list)
     );
     console.log(cardRes);
-
     return () => {
       document.removeEventListener("keydown", handleEnterKeyPress);
     };
-  }, [currentEmail, emails]);
+  }, [currentEmail, invitedEmail]);
 
+  const gotoTeamPage = (teamId) => {
+    navigate(`/team-main/${teamId}`);
+  };
   const teams =
     cardList &&
     cardList.map((value) => (
-      <Ing id={value.id} title={value.name} goormCount={value.goormCount} />
+      <Ing
+        id={value.id}
+        title={value.name}
+        goormCount={value.goormCount}
+        icon={value.icon}
+        onClick={() => gotoTeamPage(value.id)}
+      />
     ));
 
   const closeModal1_2 = () => {
@@ -650,6 +683,15 @@ const Main = () => {
   const selectImage = (image) => {
     setSelectedImage(image);
     closeImages();
+  };
+
+  const PostTeamTopic = async () => {
+    addTeamTopic({
+      name: teamTopic,
+      detail: teamDetail,
+    });
+
+    openModal2();
   };
 
   return (
@@ -771,10 +813,18 @@ const Main = () => {
                 )}
                 {/* 팀이름 받아오기 */}
                 <GetTeamName>{teamName}</GetTeamName>
-                <InputTeamTopic placeholder="첫 주제를 입력하세요"></InputTeamTopic>
-                <InputTopicDescript placeholder="주제에 대한 간단한 설명을 입력하세요"></InputTopicDescript>
+                <InputTeamTopic
+                  value={teamTopic}
+                  placeholder="첫 주제를 입력하세요"
+                  onChange={handleTopic}
+                ></InputTeamTopic>
+                <InputTopicDescript
+                  value={teamDetail}
+                  placeholder="주제에 대한 간단한 설명을 입력하세요"
+                  onChange={handleDetail}
+                ></InputTopicDescript>
                 {/* ... */}
-                <NextBtn style={{ marginTop: "70px" }} onClick={openModal2}>
+                <NextBtn style={{ marginTop: "70px" }} onClick={PostTeamTopic}>
                   다음
                 </NextBtn>
               </ModalContent>
@@ -797,14 +847,11 @@ const Main = () => {
                 />
                 <Modal2ContentTex>초대된 멤버</Modal2ContentTex>
                 <Modal2EmailContainer>
-                  {emails.map((email, index) => (
+                  {invitedEmail && (
                     <EmailBox>
-                      <Email key={index}>{email}</Email>
-                      <DeleteBtn onClick={() => handleDeleteEmail(index)}>
-                        삭제
-                      </DeleteBtn>
+                      <Email>{invitedEmail}</Email>
                     </EmailBox>
-                  ))}
+                  )}
                 </Modal2EmailContainer>
 
                 <InviteButton onClick={closeModal2}>확인</InviteButton>
