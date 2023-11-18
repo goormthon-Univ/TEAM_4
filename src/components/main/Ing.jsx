@@ -205,17 +205,11 @@ export default function Ing(props) {
                 {/* {팀장이면 권한 표시 하기} */}
                 <MemberAuth>팀장</MemberAuth>
               </MemberBox>
-              <MemberBox>
-                <MemberImg></MemberImg>
-                <MemberName></MemberName>
-                {/* {팀장이면 권한 표시 하기} */}
-                <MemberAuth></MemberAuth>
-              </MemberBox>
             </MemberList>
           </ShowMember>
         )}
       </Image>
-      <CountCloud>{props.goormCount}</CountCloud>
+      <CountCloud>현재 구름 갯수{props.goormCount}개</CountCloud>
     </Team>
   );
 }
