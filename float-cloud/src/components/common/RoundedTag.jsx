@@ -6,7 +6,7 @@ const Oval = styled.div`
   color: ${(props) => props.color};
   font-size: ${(props) => props.fontSize};
   background: ${(props) => props.backgroundColor};
-  font-weight: 700;
+  font-weight: 500;
   border-radius: 3.125rem;
   border: none;
   padding: 0.625rem 1.25rem;

@@ -4,8 +4,8 @@ import styled from "styled-components";
 const SpcAway = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 90%;
-  margin-top: 2rem;
+  width: 98%;
+  padding: 10px 20px;
 `;
 
 const SpcBetween = (props) => {

@@ -7,7 +7,7 @@ import RoundedTag from "../common/RoundedTag"; // RoundedTag 파일 경로에 �
 const AbtHistory = styled.div`
   background: ${(props) => props.backgroundColor};
   border-radius: 3.125rem;
-  width: 30vw;
+  width: 35vw;
   height: 10rem;
   display: flex;
   position: relative;
@@ -20,7 +20,7 @@ const AbtHistory = styled.div`
 const HistoryTag = (props) => {
   return (
     <AbtHistory backgroundColor={props.backgroundColor}>
-      <div style={{fontSize:"1.25rem"}}>
+      <div style={{fontSize:"1.25rem", paddingtop:"0.5rem"}}>
         {props.children}
         <RoundedTag
           color={props.tagColor}
