@@ -126,7 +126,6 @@ const SignOutBtn = styled.button`
   font-weight: 600;
 `
 const SettingMain = () => {
-  const navigate = useNavigate();
 
   return (
     <Container>
