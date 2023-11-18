@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/common/Header";
+import Header from "../../components/common/BeforeHeader";
 import CloudLogo from "../../components/common/CloudLogo";
 import Input from "../../components/account/Input";
 import Button from "../../components/account/Button";

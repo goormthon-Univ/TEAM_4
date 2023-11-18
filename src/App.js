@@ -28,7 +28,7 @@ function App() {
         <Route path="/main" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create-acc" element={<CreateAcc />} />
-        <Route path="/team-main" element={<TeamMain />} />
+        <Route path="/team-main/:teamId" element={<TeamMain />} />
         <Route path="/add-comment" element={<AddComment />} />
 
         {/* 최윤서 경로 */}

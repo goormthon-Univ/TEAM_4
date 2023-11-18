@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import Header from "../../components/common/Header";
+import Header from "../../components/common/BeforeHeader";
 
 // height는 추후 수정 필요 시 수정
 const Container = styled.div`

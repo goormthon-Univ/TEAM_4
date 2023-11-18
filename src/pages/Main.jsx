@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { addTeam } from "../api/auth";
+
 import { useNavigate } from "react-router-dom";
 import Header from "../components/common/Header";
-import { findTeamList } from "../api/team";
+import { findTeamList, addTeamTopic, joinTeam, invite } from "../api/team";
+import { addTeam } from "../api/team";
 import Ing from "../components/main/Ing";
 
 const Container = styled.div`
@@ -548,186 +549,7 @@ const TeamsContainer = styled.div`
   align-items: flex-start; /* 위 정렬 설정 */
 `;
 
-const Team = styled.div`
-  width: calc(20% - 20px);
-  height: calc(13vw - 20px);
-
-  margin: 0.5% 0.8% 4px 0px;
-  padding: 25px 28px 10px 28px;
-  flex-shrink: 0;
-
-  border-radius: 50px;
-  background: var(--Skyblue-20, rgba(0, 148, 255, 0.2));
-
-  @media screen and (max-width: 1443px) {
-    width: calc(25% - 64px);
-    height: calc(13vw - 6px);
-    min-height: 148px;
-  }
-
-  &:hover .ShowMember {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  &:actice {
-    background: #0071c3;
-  }
-`;
-const Subject = styled.div`
-  height: 33px;
-  width: 210px;
-
-  color: var(--Mono-5, #404040);
-  font-family: SUIT-Bold;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 700;
-
-  line-height: 150%; /* 27px */
-`;
-
-const Image = styled.div`
-  display: inline-block;
-  width: 25%;
-  height: 22%;
-
-  margin-top: 58%;
-  border-radius: 10px;
-  background: #ffffff;
-  flex-shrink: 0;
-  position: relative;
-`;
-
-//멤버 목록보여주기
-const ShowMember = styled.div`
-  position: absolute;
-  z-index: 1;
-
-  top: 60%;
-  left: 52%;
-
-  width: 180px;
-  height: 200px;
-  flex-shrink: 0;
-  transform: translateX(-2%);
-
-  border-radius: 5px;
-  padding: 10px 10px;
-  opacity: 0.9;
-
-  background: rgba(var(--White-RGB, 255, 255, 255), 0.8);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-  visibility: hidden;
-  transition: opacity 0.3s;
-`;
-const ShowMemberTitle = styled.span`
-  width: 100%;
-  height: 25px;
-
-  margin-top: 4px;
-
-  color: var(--Mono-5, #404040);
-  font-family: SUIT-Bold;
-  font-size: 13px;
-  font-style: normal;s
-  font-weight: 700;
-  line-height: 150%; /* 24px */
-`;
-const MemberList = styled.div`
-  margin-top: 3%;
-  overflow-x: fixed;
-  position: relative;
-
-  overflow: auto;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  width: 100%;
-  height: 80%;
-`;
-const MemberBox = styled.div`
-  position: relative;
-
-  padding: 3px;
-  margin-bottom: 3px;
-  width: 97%;
-  height: 14%;
-  display: flex;
-`;
-const MemberImg = styled.div`
-  width: 13%;
-  height: 100%;
-  border-radius: 30px;
-  background: #000;
-`;
-const MemberName = styled.span`
-  margin-top: 1%;
-  margin-left: 6px;
-
-  color: var(--Mono-5, #404040);
-  font-family: SUIT-Medium;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 150%; /* 24px */
-`;
-const MemberAuth = styled.div`
-  position: absolute;
-  top: 4px;
-  right: 5px;
-  color: #0094ff;
-  font-family: SUIT-Regular;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 150%; /* 24px */
-`;
-
-const CountCloud = styled.div`
-  display: inline-block;
-
-  vertical-align: 14px;
-  width: 54%;
-  height: 26px;
-  padding: 10px 0px 2px 10px;
-  margin-left: 15%;
-
-  color: #fafafa;
-  font-family: SUIT-Medium;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 150%; /* 18px */
-
-  flex-shrink: 0;
-
-  border-radius: 36.775px;
-  background: #3d94f7;
-
-  @media screen and (max-width: 1578px) {
-    font-size: 10px;
-    margin-left: 13%;
-  }
-
-  @media screen and (max-width: 1434px) {
-    font-size: 9.6px;
-    margin-left: 10%;
-    padding-left: 6px;
-    padding-right: 6px;
-  }
-
-  @media screen and (max-width: 1342px) {
-    font-size: 8.3px;
-    margin-left: 9%;
-    padding-left: 6px;
-    padding-right: 2px;
-  }
-`;
-
 const Main = () => {
-  const [showMembers, setShowMembers] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isModal1_2Open, setModal1_2Open] = useState(false);
   const [isModal2Open, setModal2Open] = useState(false);
@@ -736,16 +558,39 @@ const Main = () => {
   const [isChooseImgOpen, setImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const [emails, setEmails] = useState([]);
+  const [invitedEmail, setInvitedEmail] = useState("");
   const [currentEmail, setCurrentEmail] = useState("");
 
   const [teamName, setTeamName] = useState("");
+  const [teamTopic, setTeamTopic] = useState("");
+  const [teamDetail, setTeamDetail] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleTopic = (event) => {
+    setTeamTopic(event.target.value);
+  };
+  const handleDetail = (event) => {
+    setTeamDetail(event.target.value);
+  };
 
   const openModal = () => {
     setModalOpen(true);
   };
   // 첫 주제 및 설명에 대한 모달1_2 열기/닫기
   const openModal1_2 = () => {
+    let teamId;
+    addTeam({
+      name: teamName,
+      detail: "",
+      icon: selectedImage,
+    }).then((res) => {
+      teamId = res;
+      console.log(res);
+      console.log(teamId);
+      joinTeam({ team: res });
+    });
+
     setModal1_2Open(true);
     setModalOpen(false);
   };
@@ -756,19 +601,21 @@ const Main = () => {
 
   const handleEnterPress = (event) => {
     if (event.key === "Enter" && currentEmail.trim() !== "") {
-      setEmails([...emails, currentEmail]);
+      setCurrentEmail("");
+
+      invite({
+        email: currentEmail,
+      });
+
+      setInvitedEmail(currentEmail);
       setCurrentEmail("");
     }
-  };
-  const handleDeleteEmail = (index) => {
-    // 이메일 삭제 로직
-    const newEmails = [...emails];
-    newEmails.splice(index, 1);
-    setEmails(newEmails);
   };
 
   const handleTeamNameChange = (event) => {
     setTeamName(event.target.value);
+
+    localStorage.setItem("팀이름", event.target.value);
   };
 
   const [cardList, setCardList] = useState([]);
@@ -784,16 +631,24 @@ const Main = () => {
       setCardList(list)
     );
     console.log(cardRes);
-
     return () => {
       document.removeEventListener("keydown", handleEnterKeyPress);
     };
-  }, [currentEmail, emails]);
+  }, [currentEmail, invitedEmail]);
 
+  const gotoTeamPage = (teamId) => {
+    navigate(`/team-main/${teamId}`);
+  };
   const teams =
     cardList &&
     cardList.map((value) => (
-      <Ing id={value.id} title={value.name} goormCount={value.goormCount} />
+      <Ing
+        id={value.id}
+        title={value.name}
+        goormCount={value.goormCount}
+        icon={value.icon}
+        onClick={() => gotoTeamPage(value.id)}
+      />
     ));
 
   const closeModal1_2 = () => {
@@ -828,6 +683,15 @@ const Main = () => {
   const selectImage = (image) => {
     setSelectedImage(image);
     closeImages();
+  };
+
+  const PostTeamTopic = async () => {
+    addTeamTopic({
+      name: teamTopic,
+      detail: teamDetail,
+    });
+
+    openModal2();
   };
 
   return (
@@ -949,10 +813,18 @@ const Main = () => {
                 )}
                 {/* 팀이름 받아오기 */}
                 <GetTeamName>{teamName}</GetTeamName>
-                <InputTeamTopic placeholder="첫 주제를 입력하세요"></InputTeamTopic>
-                <InputTopicDescript placeholder="주제에 대한 간단한 설명을 입력하세요"></InputTopicDescript>
+                <InputTeamTopic
+                  value={teamTopic}
+                  placeholder="첫 주제를 입력하세요"
+                  onChange={handleTopic}
+                ></InputTeamTopic>
+                <InputTopicDescript
+                  value={teamDetail}
+                  placeholder="주제에 대한 간단한 설명을 입력하세요"
+                  onChange={handleDetail}
+                ></InputTopicDescript>
                 {/* ... */}
-                <NextBtn style={{ marginTop: "70px" }} onClick={openModal2}>
+                <NextBtn style={{ marginTop: "70px" }} onClick={PostTeamTopic}>
                   다음
                 </NextBtn>
               </ModalContent>
@@ -975,14 +847,11 @@ const Main = () => {
                 />
                 <Modal2ContentTex>초대된 멤버</Modal2ContentTex>
                 <Modal2EmailContainer>
-                  {emails.map((email, index) => (
+                  {invitedEmail && (
                     <EmailBox>
-                      <Email key={index}>{email}</Email>
-                      <DeleteBtn onClick={() => handleDeleteEmail(index)}>
-                        삭제
-                      </DeleteBtn>
+                      <Email>{invitedEmail}</Email>
                     </EmailBox>
-                  ))}
+                  )}
                 </Modal2EmailContainer>
 
                 <InviteButton onClick={closeModal2}>확인</InviteButton>
